@@ -1,0 +1,21 @@
+.home-view {
+	&-balls {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: center;
+		width: 36vw;
+		margin: auto;
+		@media(orientation: landscape) {
+			width: 23vh;
+		}
+	}
+
+	&-ball {
+		@include resize-pool-ball(15vw);
+		margin: auto;
+		@media(orientation: landscape) {
+			@include resize-pool-ball(10vh);
+		}
+
+	}
+}

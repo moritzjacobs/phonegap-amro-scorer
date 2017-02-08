@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="de.moritzjacobs.pg.amroscorer" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>AMRO Scorer</name>
+    <description>
+       Score keeping app for American Rotation
+    </description>
+    <author email="amro@moritzjacobs.de" href="http://moritzjacobs.de">
+        Moritz Jacobs
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <preference name="orientation" value="portrait" />
+    <engine name="android" spec="~6.0.0" />
+</widget>

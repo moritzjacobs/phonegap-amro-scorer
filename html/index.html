@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+		<link rel='stylesheet' id='styles-css' href='public/css/styles.css' type='text/css' media='screen' />
+		<title>AMRO Scorer</title>
+	</head>
+	<body>
+
+		<div class="app-loader" id="app-loader">
+			<div id="loader-ball" class="app-loader-ball ball-1"></div>
+			<p>Loading<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></p>
+			<script>
+			// animate loader
+			window.loader_interval = window.setInterval(function(){
+				var rnd = Math.floor(Math.random() * 15) + 1;
+				document.querySelector('#loader-ball').setAttribute("class", "app-loader-ball ball-"+rnd);
+			}, 500);
+			</script>
+		</div>
+
+		<div id="viewport" class="viewport"
+			v-cloak
+			v-on:load="initApp()"
+			v-bind:data-show="display_viewport"
+			v-bind:data-total-views="total_views"
+			v-bind:data-current-view="current_view_index"
+			>
+
+			@@include('home.html')
+			@@include('newgame.html')
+			@@include('newgame2.html')
+			@@include('game.html')
+		</div>
+
+
+        <script type="text/javascript" src="cordova.js"></script>
+		<script type='text/javascript' src='public/js/scripts.js'></script>
+	</body>
+</html>

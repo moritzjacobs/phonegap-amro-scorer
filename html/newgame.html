@@ -1,0 +1,8 @@
+<section class="view newgame-view" id="newgame-view" v-cloak>
+	<h1>Great! What are your names? :)</h1>
+	<input type="text" v-model="player_1.name" name="player-1"/ v-bind:value="player_1.name">
+	<input type="text" v-model="player_2.name" name="player-2"/ v-bind:value="player_2.name">
+	<button class="primary" v-on:click="nextView()">continue</button>
+	<button class="cancel" v-on:click="prevView()">back</button>
+</section>
+

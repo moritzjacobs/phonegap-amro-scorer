@@ -1,0 +1,16 @@
+{
+    "title": "AMRO Scorer",
+    "description": "Score keeping app for american rotation",
+    "homepage": "https://www.moritzjacobs.de",
+    "copyright": "(c) 2015 Moritz Jacobs, mit <3 für Code und Liebe @ Neonpastell GmbH (http://www.neonpastell.de)",
+    "version": "1.0.0",
+    "proxy_url": "http://localhost/project",
+    "paths": {
+        "src_sass": "../_scss/",
+        "src_js": "../_js/",
+        "src_html": "../html/",
+        "dist_html": "../www/",
+        "dist_css": "../www/public/css/",
+        "dist_js": "../www/public/js/"
+    }
+}

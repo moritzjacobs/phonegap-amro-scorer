@@ -1,0 +1,9 @@
+/platforms
+/plugins
+/_dev/node_modules
+
+
+*.scssc
+www/public/css
+www/public/js
+/www/index.html

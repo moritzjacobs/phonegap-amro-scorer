@@ -1,0 +1,61 @@
+.game-footer {
+	align-self: flex-end;
+	display: flex;
+	flex-flow: row nowrap;
+	flex-grow: 0;
+	width: 100%;
+
+	button {
+		border-radius: 0;
+		margin: 0;
+		border: none;
+		border-top: 2px solid white;
+		padding: 0;
+ 		width: 35vw;
+
+		&:first-child {
+			border-right: 1px solid white;
+			flex-grow: 2;
+		}
+
+		&:last-child {
+			border-left: 1px solid white;
+			flex-grow: 2;
+		}
+ 
+ 		&.insomnia {
+ 			width: 15vw;
+			&.active {
+				position: relative;
+				background-color: white;
+				color: $em_color;
+
+				&:after {
+					content: " ";
+					display: block;
+					position: absolute;
+					top: 48%;
+					left: 50%;
+					width: 5px;
+					height: 75%;
+					transform: translate(-50%, -50%)rotateZ(45deg);
+					background-color: $em_color;
+				}
+
+				&:before {
+					content: " ";
+					display: block;
+					position: absolute;
+					top: 48%;
+					left: 50%;
+					width: 80%;
+					height: 70%;
+					border: 5px solid $em_color;
+					border-radius: 50%;
+					transform: translate(-50%, -50%);
+				}
+
+			}
+		}
+	}
+}

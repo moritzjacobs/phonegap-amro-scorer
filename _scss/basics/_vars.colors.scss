@@ -1,0 +1,61 @@
+@function colors($palette, $tone: 'base') {
+    @return map-get(map-get($color_palettes, $palette), $tone);
+}
+
+$color_white: #fff;
+$color_black: #000;
+$color_brand: #4f65f0;
+
+$color_yellow : #eddb37;
+$color_blue : #411dcf;
+$color_red : #e31919;
+$color_pink : #ff52ae;
+$color_orange : #f27c38;
+$color_green : #008b4c;
+$color_brown : #94632f;
+
+$em_color : $color_brand;
+
+$color_palettes: (
+	black: (
+		base: $color_black
+		),
+	white: (
+		base: $color_white
+		),
+	gray: (
+		base: $color_white,
+		lighter: darken($color_white, 3%),
+		light: darken($color_white, 15%),
+		medium: darken($color_white, 30%),
+		dark: $color_black,
+	),
+	brand: (
+		base: $color_brand,
+		hover: lighten($color_brand, 10%),
+	),
+	focus: (
+		base: lighten(#0000ff, 40%),
+	),
+	warning: (
+		base: lighten(#ff0000, 20%),
+	),
+	colors: (
+		blue: #0000ff,
+		red: #ff0000,
+		green: #00ff00,
+	),
+);
+
+
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		

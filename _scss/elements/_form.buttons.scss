@@ -1,0 +1,57 @@
+%btn {
+	display: block;
+	background-color: $em-color;
+	font-family: $body-font;
+	@include font-size(1.2em);
+	color: white;
+	padding: 0 1em;
+	border: 3px solid white;
+	text-align: center;
+	box-shadow: $box-shadow;
+	margin: 10px 0;
+	cursor: pointer;
+	min-height: 50px;
+	line-height: 50px;
+	border-radius: 10px;
+	outline: none;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	
+	transition: background-color 200ms;
+
+	&:active,
+	&:focus {
+		animation: flash 500ms 1;
+		@keyframes flash {
+			0% {
+				background-color: $em-color;
+				color: white;
+			}
+			50% {
+				background-color: white;
+				color: $em-color;
+			}
+			100% {
+				background-color: $em-color;
+				color: white;
+			}
+		}
+	}
+
+	&.primary {
+		background-color: rgba($color_green, 0.5)
+	}
+	&.cancel {
+		background-color: rgba($color_red, 0.5);
+	}
+
+}
+
+button,
+input[type=submit],
+input[type=button],
+input[type=reset] {
+	@extend %btn;
+}

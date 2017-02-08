@@ -1,0 +1,86 @@
+$input-border-width : 1px;
+
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+}
+
+form {
+
+}
+
+label {
+	display: block;
+	width: 100%;
+	padding: .3em 0;
+	font-size: 0.9em;
+	font-weight: bold;
+}
+
+textarea {
+	font-family: $body-font;
+	color: colors(gray, darker);
+	width: 100%;
+	min-height: 150px;
+	border: $input-border-width solid colors(gray, medium);
+	padding: .3em;
+	margin: 1em 0;
+	&:focus {
+		border-color: colors(focus);
+	}
+}
+
+select {
+	display: block;
+	width: 100%;
+}
+
+input {
+	display: block;
+	border: none;
+	line-height: 1.25;
+	font-size: inherit;
+	padding: .3em .5em;
+
+	// text-transform: uppercase;
+	border: $input-border-width solid colors(gray, medium);
+
+	&.is-error {
+		outline: none;
+		border: $input-border-width solid colors(warning);
+
+		& + label,
+		& + span {
+			color: colors(warning);
+		}
+	}
+
+	&:active,
+	&:focus {
+		outline: none;
+		border: $input-border-width solid colors(focus);
+	}
+
+	&::-webkit-input-placeholder {
+		color: colors(gray, dark);
+		opacity: 0.5;
+	}
+
+	&::-moz-placeholder {
+		color: colors(gray, dark);
+		opacity: 0.5;
+	}
+
+	&:-ms-input-placeholder {
+		color: colors(gray, dark);
+		opacity: 0.5;
+	}
+
+	&:-moz-placeholder {
+		color: colors(gray, dark);
+		opacity: 0.5;
+	}
+}

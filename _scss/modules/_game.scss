@@ -1,0 +1,151 @@
+#game-view {
+	padding: 0;
+}
+
+.game {
+	@import "game.header";
+
+	height: 100%;
+	display: flex;
+	flex-flow: column nowrap;
+
+	&-main {
+		flex-grow: 1;
+		display: flex;
+		justify-content: center;
+		flex-flow: row wrap;
+	}
+
+	.ball-depot {
+		padding: 5px;
+		width: 50%;
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		flex-flow: row wrap;
+
+		&.balls-table {
+			width: 100%;
+			.ball-depot-ball {
+				@include resize-pool-ball(16vw);
+				@media(min-width: 600px), (orientation: landscape){
+					@include resize-pool-ball(8vw);
+				}
+			}
+		}
+
+		&.balls-player-1,
+		&.balls-player-2 {
+			border-top: 2px solid white;
+
+		}
+
+
+		&.balls-player-1 {
+			border-right: 1px solid white;
+		}
+		&.balls-player-2 {
+			border-left: 1px solid white;
+		}
+
+		&-ball {
+			@include resize-pool-ball(14vw);
+			margin: .5vw;
+			pointer: cursor;
+			@media(min-width: 600px) {
+				@include resize-pool-ball(6vw);
+			}
+		}
+	}
+
+	@import "game.footer";
+}
+
+
+.move-ball {
+	display: flex;
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 20;
+
+	background-color: rgba($em_color, 0.9);
+
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+
+	&-inner {
+		padding: 20px;
+		display: flex;
+		flex-flow: column nowrap;
+		width: 100vw;
+		justify-content: space-around;
+		align-items: center;
+
+		.ball {
+			@include resize-pool-ball(40vw);
+			position: absolute;
+			z-index: 1;
+			top: calc(50% + 8.5vh);
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+
+	&-buttons {
+		width: 100vw;
+		height: 83vh;
+		margin-top: 17vh;
+		flex-flow: row wrap;
+		display: flex;
+
+		button {
+			width: 50vw;
+			height: 50%;
+			margin: 0;
+			border: 2px solid white;
+			border-radius: 0;
+			&:first-child {
+				width: 100%;
+			}
+		}
+	}
+	@for $i from 0 through 9 {
+		&[data-current-view='#{$i}'] {
+			left: #{100 * $i}vw;
+		}
+	}
+}
+
+
+/*
+<section id="game-view" class="view game-view" v-cloak>
+	<div class="game">
+		<header class="game-header">
+			<div id="game-header-player-p1" class="game-header-player game-header-player-p1">
+				<h3 class="name">{{player_1.name}}</h3>
+				<h4 class="total-score">{{player_1.score_total}}</h4>
+				<h2 class="score">{{player_1.score_frame}}</h2>
+			</div>
+			<div id="game-header-player-p2" class="game-header-player game-header-player-p2">
+				<h3 class="name">{{player_2.name}}</h3>
+				<h4 class="total-score">{{player_2.score_total}}</h4>
+				<h2 class="score">{{player_2.score_frame}}</h2>
+			</div>
+		</header>
+		<main class="game-main">
+			
+			<div v-for="ball in balls" v-bind:class="'ball-'+ball" class="overlay-ball ball-1"></div>
+
+		</main>
+		<footer class="game-footer">
+			<button>end game</button>
+			<button>reset frame</button>
+		</footer>
+	</div>
+</section>
+
+*/

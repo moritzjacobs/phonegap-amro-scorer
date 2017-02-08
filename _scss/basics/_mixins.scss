@@ -1,0 +1,28 @@
+@function strip-unit($number) {
+	@if type-of($number) == 'number' and not unitless($number) {
+		@return $number / ($number * 0 + 1);
+	}
+	@return $number;
+}
+
+
+$sizeLineHeightBase: 1.4;
+
+@mixin font-size($fontSize, $lineHeight: $fontSize) {
+	font-size: $fontSize;
+
+	@if $lineHeight == auto {
+		line-height: $sizeLineHeightBase;
+	} @else {
+		line-height: strip-unit($lineHeight/$fontSize);
+	}
+}
+
+@mixin linear_gradient_border($margin, $color, $space_from, $space_to) {
+	border-image: linear-gradient(90deg, transparent 0, transparent $margin, $color $margin, $color, $space_from, transparent $space_from, transparent $space_to, $color $space_to, $color #{100% - $margin}, transparent #{100% - $margin});
+	border-image-slice: 1;
+}
+
+@function breakpoint($name) {
+	@return map-get($chroma-breakpoints, $name);
+}

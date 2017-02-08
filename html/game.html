@@ -1,0 +1,65 @@
+<section id="game-view" class="view game-view" v-cloak>
+	<div class="game">
+		<header class="game-header">
+			<div class="game-header-info">
+				<h4>Frame #{{frame_count}}</h4>
+			</div>
+			<div id="game-header-player-p1" class="game-header-player game-header-player-p1">
+				<h3 class="name">{{player_1.name}}</h3>
+				<h4 class="total-score">{{player_1.score_total + player_1.score_frame}}</h4>
+				<h2 class="score">{{player_1.score_frame}}</h2>
+				<div class="player-breaks" v-if="player_1.next_break">BREAK!</div>
+			</div>
+			<div id="game-header-player-p2" class="game-header-player game-header-player-p2">
+				<h3 class="name">{{player_2.name}}</h3>
+				<h4 class="total-score">{{player_2.score_total + player_2.score_frame}}</h4>
+				<h2 class="score">{{player_2.score_frame}}</h2>
+				<div class="player-breaks" v-if="player_2.next_break">BREAK!</div>
+			</div>
+		</header>
+		<main class="game-main">
+
+			<div class="ball-depot balls-table">
+				<div v-for="ball in balls_table" v-on:click="moveBall(ball)" v-bind:class="'ball-'+ball" class="ball-depot-ball"></div>
+			</div>
+
+			<div class="ball-depot balls-player-1">
+				<div v-for="ball in player_1.balls" v-on:click="moveBall(ball)" v-bind:class="'ball-'+ball" class="ball-depot-ball"></div>
+			</div>
+
+			<div class="ball-depot balls-player-2">
+				<div v-for="ball in player_2.balls" v-on:click="moveBall(ball)" v-bind:class="'ball-'+ball" class="ball-depot-ball"></div>
+			</div>
+
+		</main>
+		<footer class="game-footer">
+			<button v-on:click="endGame()">end game</button>
+			<button class="insomnia" v-bind:class="{ active : insomnia_active }" v-on:click="toggleInsomnia()">zZz</button>
+			<button v-on:click="resetFrame()">reset frame</button>
+		</footer>
+		<move-ball
+			v-bind:data-current-view="current_view_index"
+			v-bind:show="show_move_ball"
+			v-bind:ball="current_move_ball"
+			v-bind:player_1="player_1.name"
+			v-bind:player_2="player_2.name"
+			v-on:moveToPlayer="moveToPlayer"
+			v-on:moveToTable="moveToTable"
+			></move-ball>
+	</div>
+</section>
+
+<script type="text/x-template" id="move-ball">
+	<transition name="fade">
+		<div v-show="show" class="move-ball">
+			<div class="move-ball-inner">
+				<div class="ball" v-bind:class="'ball-'+ball"></div>
+				<div class="move-ball-buttons">
+					<button v-on:click="moveToTable">Back to table</button>
+					<button v-on:click="moveToPlayer(1)">{{player_1}}</button>
+					<button v-on:click="moveToPlayer(2)">{{player_2}}</button>
+				</div>
+			</div>
+		</div>
+	</transition>
+</script>
