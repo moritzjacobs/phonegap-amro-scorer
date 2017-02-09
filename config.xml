@@ -2,13 +2,19 @@
 <widget id="de.moritzjacobs.pg.amroscorer" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>AMRO Scorer</name>
     <description>
-       Score keeping app for American Rotation
-    </description>
+	   Score keeping app for American Rotation
+	</description>
     <author email="amro@moritzjacobs.de" href="http://moritzjacobs.de">
-        Moritz Jacobs
-    </author>
+		Moritz Jacobs
+	</author>
     <content src="index.html" />
     <access origin="*" />
     <preference name="orientation" value="portrait" />
+    <icon platform="android" qualifier="ldpi" src="res/icon.png" />
+    <icon platform="android" qualifier="mdpi" src="res/icon.png" />
+    <icon platform="android" qualifier="hdpi" src="res/iconoriginal.png" />
+    <icon platform="android" qualifier="xhdpi" src="res/iconoriginal.png" />
+    <icon platform="android" qualifier="xxhdpi" src="res/iconoriginal.png" />
+    <icon platform="android" qualifier="xxxhdpi" src="res/icon/iconoriginal.png" />
     <engine name="android" spec="~6.0.0" />
 </widget>
