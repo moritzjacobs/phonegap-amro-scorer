@@ -3,6 +3,7 @@
 	background-color: $em-color;
 	font-family: $body-font;
 	@include font-size(1.2em);
+	font-weight: 700;
 	color: white;
 	padding: 0 1em;
 	border: 3px solid white;
@@ -40,12 +41,6 @@
 		}
 	}
 
-	&.primary {
-		background-color: rgba($color_green, 0.5)
-	}
-	&.cancel {
-		background-color: rgba($color_red, 0.5);
-	}
 
 }
 

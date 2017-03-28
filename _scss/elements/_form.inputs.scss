@@ -16,13 +16,12 @@ input {
 		font-family: $body-font;
 		@include font-size(1.2em);
 		color: colors(white);
-		padding: 0 1em;
-		border: 3px solid white;
-		box-shadow: $box-shadow;
+		border: none;
+		border-bottom: 3px solid white;
 		margin: 10px 0;
+		padding: 0;
 		min-height: 50px;
 		line-height: 50px;
-		border-radius: 10px;
 	}
 
 	&[type=radio],

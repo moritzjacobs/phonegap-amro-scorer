@@ -121,31 +121,3 @@
 }
 
 
-/*
-<section id="game-view" class="view game-view" v-cloak>
-	<div class="game">
-		<header class="game-header">
-			<div id="game-header-player-p1" class="game-header-player game-header-player-p1">
-				<h3 class="name">{{player_1.name}}</h3>
-				<h4 class="total-score">{{player_1.score_total}}</h4>
-				<h2 class="score">{{player_1.score_frame}}</h2>
-			</div>
-			<div id="game-header-player-p2" class="game-header-player game-header-player-p2">
-				<h3 class="name">{{player_2.name}}</h3>
-				<h4 class="total-score">{{player_2.score_total}}</h4>
-				<h2 class="score">{{player_2.score_frame}}</h2>
-			</div>
-		</header>
-		<main class="game-main">
-			
-			<div v-for="ball in balls" v-bind:class="'ball-'+ball" class="overlay-ball ball-1"></div>
-
-		</main>
-		<footer class="game-footer">
-			<button>end game</button>
-			<button>reset frame</button>
-		</footer>
-	</div>
-</section>
-
-*/

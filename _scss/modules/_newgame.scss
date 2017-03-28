@@ -1,0 +1,17 @@
+.newgame-view {
+	&-buttons {
+		margin-top: 1em;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-between;
+		button {
+			width: 45%;
+		}
+	}
+}
+
+.newgame2-view {
+	.cancel {
+		margin-top: 2em;
+	}
+}

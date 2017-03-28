@@ -33,9 +33,10 @@
 
 		</main>
 		<footer class="game-footer">
-			<button v-on:click="endGame()">end game</button>
+			<button v-on:click="endGame()">{{ i8n("end game") }}</button>
 			<button class="insomnia" v-bind:class="{ active : insomnia_active }" v-on:click="toggleInsomnia()">zZz</button>
-			<button v-on:click="resetFrame()">reset frame</button>
+			<button v-if="(!frame_endable)" v-on:click="resetFramePrompt()">{{ i8n("reset frame") }}</button>
+			<button v-if="frame_endable" v-on:click="endFrame()">{{ i8n("end frame") }}</button>
 		</footer>
 		<move-ball
 			v-bind:data-current-view="current_view_index"
@@ -55,7 +56,7 @@
 			<div class="move-ball-inner">
 				<div class="ball" v-bind:class="'ball-'+ball"></div>
 				<div class="move-ball-buttons">
-					<button v-on:click="moveToTable">Back to table</button>
+					<button v-on:click="moveToTable">{{i8n('back to table')}}</button>
 					<button v-on:click="moveToPlayer(1)">{{player_1}}</button>
 					<button v-on:click="moveToPlayer(2)">{{player_2}}</button>
 				</div>

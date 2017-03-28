@@ -1,5 +1,46 @@
 ;(window.onload = function(){
 	"use strict";
+	
+
+	var I8N_STRINGS = [
+		{
+			en: "start game",
+			de: "Spiel starten",
+		},
+		{
+			en: "Welcome!",
+			de: "Willkommen"
+		},
+		{
+			en: "Great! What are your names?",
+			de: "Cool! Wie heißt ihr?"
+		},
+		{
+			en: "continue",
+			de: "weiter"
+		},
+		{
+			en: "back",
+			de: "zurück"
+		},
+		{
+			en: "Who breaks first?",
+			de: "Wer stößt an?"
+		},
+		{
+			en: "end game",
+			de: "Spiel beenden"
+		},
+		{
+			en: "reset frame",
+			de: "Frame zurücksetzen"
+		},
+		{
+			en: "back to table",
+			de: "Auf den Tisch"
+		}
+	];
+
 
 	var app = new Vue({
 		// main container
@@ -18,22 +59,33 @@
 			current_move_ball: 1,
 
 			// game model
-			frame_count: 0,
+			frame_count: 1,
+			frame_endable: false,
 			player_1: { name: "Player 1", score_frame : 0, score_total: 0, next_break: false, balls: [] },
 			player_2: { name: "Player 2", score_frame : 0, score_total: 0, next_break: false, balls: [] },
 			balls_table: [],
 
 		},
 
+		// data watcher
+		computed: {
+			computedDataJson: function(){
+				return JSON.stringify(this.$data);
+			},
+		},
+
+		watch: {
+			computedDataJson: function(){
+				this.saveAppData();
+			},
+		},
+
 		methods: {
 			// Application Constructor
 			initApp: function() {
-
 				// 15 balls = [1, 2, 3, …]
-				this.resetGame();
-
-				this.loadStoredData();
-
+				this.retrieveAppData();
+				
 				//bootstrap UI
 				var viewport = document.querySelector('#viewport');
 				this.total_views = viewport.querySelectorAll(".view").length;
@@ -44,7 +96,11 @@
 
 				// enable back button on device
 				document.addEventListener("backbutton", function(){
-					app.prevView();
+					if(app.$data.current_view_index !== 3) {
+						app.prevView();
+					} else {
+						app.endGame();
+					}
 				}, true);
 
 				// load language file
@@ -53,8 +109,40 @@
 						this.device_language = language.value.substr(0, 2);
 					});
 				}, false);
-				
+
 				app.startApp();
+			},
+
+			saveAppData: function(){
+				var json = JSON.stringify(this.$data);
+				localStorage.setItem('amro_scorer_data', json);
+			},
+
+			retrieveAppData: function(){
+				var get = localStorage.getItem('amro_scorer_data');
+				if(get === null) {
+					this.resetGame();
+					this.saveAppData();
+				} else {
+					var new_data = JSON.parse(get);
+					if(typeof new_data === "object") {
+						for(var k in this.$data) {
+							this[k] = new_data[k];
+						}
+					}
+				}
+			},
+
+			i8n: function(str){
+				var lang = this.device_language || this.device_language_default;
+				for(var i = 0; i < I8N_STRINGS.length; i++) {
+					var candidate = I8N_STRINGS[i];
+					if(candidate[this.device_language_default] === str) {
+						return candidate[lang];
+					}
+				}
+				console.log("Missing string for i8n: \"" + str + "\"");
+				return str;
 			},
 
 			toggleInsomnia: function() {
@@ -64,18 +152,6 @@
 				} else {
 					window.plugins.insomnia.allowSleepAgain();
 				}
-			},
-
-			loadStoredData: function() {
-				var storage_name_1 = localStorage.getItem("player_1_name");
-				if(storage_name_1) {
-					this.player_1.name = storage_name_1;
-				}
-				var storage_name_2 = localStorage.getItem("player_2_name");
-				if(storage_name_2) {
-					this.player_2.name = storage_name_2;
-				}
-
 			},
 
 			startApp: function(){
@@ -106,8 +182,6 @@
 			startGame: function(pbf){
 				this["player_"+pbf].next_break = true;
 				this.changeView("game");
-				localStorage.setItem("player_1_name", this.player_1.name);
-				localStorage.setItem("player_2_name", this.player_2.name);
 			},
 
 			moveBall: function(ball) {
@@ -151,7 +225,13 @@
 				new_balls.sort(function(a, b) { return a - b; });
 				this["player_"+player].balls = new_balls;
 				this.update();
-				this.current_move_ball = this.findLowestBall();
+				var cmb = this.findLowestBall();
+				if(cmb >= 0) {
+					this.current_move_ball = cmb;
+				} else {
+					this.show_move_ball = false;
+				}
+
 			},
 			
 			moveToTable: function(ball) {
@@ -184,16 +264,24 @@
 				this["player_"+player].score_frame = pts;
 			},
 
-			isFrameOver: function(player) {
-				if(this.balls_table.length < 1) {
-					this.player_1.next_break = !this.player_1.next_break;
-					this.player_2.next_break = !this.player_2.next_break;
+			confirm: function(text, ok, cancel) {
+				return confirm(text);
+			},
 
-					this.player_1.score_total += this.player_1.score_frame;
-					this.player_2.score_total += this.player_2.score_frame;
-					
-					this.resetFrame();
+			isFrameOver: function(player) {
+				if(!this.frame_endable && this.balls_table.length < 1) {
 					this.show_move_ball = false;
+					
+					if(this.confirm("Frame over, next frame?", "Next frame", "adjust frame")) {
+						this.endFrame();
+					} else {
+						this.frame_endable = true;
+					}
+				}
+			},
+			resetFramePrompt: function(){
+				if(this.confirm("Really reset this frame?", "Yes, reset.", "No, it's fine.")) {
+					this.resetFrame();
 				}
 			},
 
@@ -204,17 +292,31 @@
 				this.player_1.balls = [];
 				this.player_2.balls = [];
 
-				this.frame_count++;
 				this.resetTableBalls();
 			},
 
+
+			endFrame: function(){
+				this.frame_count++;
+				this.player_1.next_break = !this.player_1.next_break;
+				this.player_2.next_break = !this.player_2.next_break;
+
+				this.player_1.score_total += this.player_1.score_frame;
+				this.player_2.score_total += this.player_2.score_frame;
+				this.frame_endable = false;
+				this.resetFrame();
+			},
+
 			endGame: function(){
-				this.resetGame();
-				this.changeView("home");
+				if(this.confirm("Are you sure you want to end this game?", "Yes, end it!", "No, whoops...")) {
+					this.resetGame();
+					this.changeView("home");
+				}
 			},
 
 			resetGame: function() {
-				this.frame_count = 0;
+				this.frame_count = 1;
+				this.frame_endable = false;
 				this.resetFrame();
 				this.player_1.score_total = 0;
 				this.player_2.score_total = 0;
@@ -235,6 +337,7 @@
 					ball: Number,
 					player_1: String,
 					player_2: String,
+					btt_label: String,
 				},
 				methods: {
 					moveToPlayer: function(player) {
@@ -242,6 +345,9 @@
 					},
 					moveToTable: function() {
 						this.$emit('movetotable', this.ball);
+					},
+					i8n: function(str){
+						return this.$root.i8n(str);
 					},
 
 				},
